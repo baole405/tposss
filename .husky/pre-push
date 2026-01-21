@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running CI locally before pushing..."
+pnpm exec nx affected -t lint test build --base=origin/main --head=HEAD
+if [ $? -ne 0 ]; then
+    echo "❌ Your code has some errors. Please fix them before pushing."
+    exit 1
+fi
+
+echo "✅ All cleared! Good boyyyyyyy."
